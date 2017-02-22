@@ -33,6 +33,7 @@ typedef struct OpenFileInfo {
     int lineNum;
     char *readBuf;
     size_t readBufLen;
+    char readBuf[20 * BUFSIZ];
     const char * readPtr;
     struct OpenFileInfo * next;
 } OFI_t;
@@ -134,7 +135,7 @@ static OFI_t * pushOFI(rpmSpec spec, const char *fn)
     ofi->fp = NULL;
     ofi->fileName = xstrdup(fn);
     ofi->lineNum = 0;
-    ofi->readBufLen = BUFSIZ;
+    ofi->readBufLen = BUFSIZ * 20;
     ofi->readBuf = xmalloc(ofi->readBufLen);
     ofi->readBuf[0] = '\0';
     ofi->readPtr = NULL;
@@ -233,7 +234,7 @@ static int copyNextLineFromOFI(rpmSpec spec, OFI_t *ofi, int strip)
 	    spec->lbufOff++; from++;
 
 	    if (spec->lbufOff >= spec->lbufSize) {
-		spec->lbufSize += BUFSIZ;
+		spec->lbufSize += 20 * BUFSIZ;
 		spec->lbuf = realloc(spec->lbuf, spec->lbufSize);
 	    }
 	}
