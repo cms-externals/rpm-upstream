@@ -557,7 +557,7 @@ package or when debugging this package.\
 
 #
 # Use internal dependency generator rather than external helpers?
-%_use_internal_dependency_generator	1
+%_use_internal_dependency_generator	0
 
 #
 # Filter GLIBC_PRIVATE Provides: and Requires:
