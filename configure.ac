@@ -746,15 +746,24 @@ AC_ARG_WITH([lua], [AS_HELP_STRING([--with-lua], [build with lua support])],
             [],
             [with_lua=yes])
 
+AS_IF([test "$with_lua" = yes],[
+  AC_CHECK_HEADER([lua.h],[
+    AC_CHECK_LIB(lua,[luaL_openlibs],[with_lua=yes],[
+      AC_MSG_ERROR([--with-lua given, but liblua not found])
+    ],
+    [-lm])
+  ],[
+      AC_MSG_ERROR([--with-lua given, but lua.h not found])
+  ])
+])
+
 AS_IF([test "$with_lua" != no],[
-  PKG_CHECK_MODULES([LUA],
-    [lua >= 5.1],
-    [AC_DEFINE(WITH_LUA, 1, [Build with lua support?])],
-    [AC_MSG_ERROR([lua not present (--without-lua to disable)])])
+  AC_DEFINE(WITH_LUA, 1, [Build with lua support?])
   AC_SUBST(LUA_CFLAGS)
-  AC_SUBST(LUA_LIBS)
+  AC_SUBST(LUA_LIBS, "-llua -lm")
 ])
 AM_CONDITIONAL(WITH_LUA,[test "$with_lua" = yes])
+
 
 AC_ARG_ENABLE(plugins, [AS_HELP_STRING([--disable-plugins],[build without plugin support])],,[enable_plugins=yes])
 AS_IF([test "$enable_plugins" = yes],[
