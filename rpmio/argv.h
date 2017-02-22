@@ -123,6 +123,18 @@ int argiAdd(ARGI_t * argip, int ix, int val);
  */
 int argvAdd(ARGV_t * argvp, const char *val);
 
+/**\ingroup rpmargv
+ * If the string is not present in the argv array, add it so that ordering
+ * of array elements is still stricly growing.
+ * @retval *argvp       argv array
+ * @param val           string arg to insert
+ * @return              0 always
+ *
+ * FIXME: do a binary search to find the insertion point,
+ *        rather than a linear one.
+ */
+int argvSortedInsert(ARGV_t *argvp, const char *val);
+
 /** \ingroup rpmargv
  * Add a number to an argv array (converting to a string).
  * @retval *argvp	argv array
