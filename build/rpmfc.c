@@ -467,10 +467,7 @@ exit:
 
 static void argvAddUniq(ARGV_t * argvp, const char * key)
 {
-    if (argvSearch(*argvp, key, NULL) == NULL) {
-	argvAdd(argvp, key);
-	argvSort(*argvp, NULL);
-    }
+    argvSortedInsert(argvp, key);
 }
 
 #define hasAttr(_a, _n) (argvSearch((_a), (_n), NULL) != NULL)
