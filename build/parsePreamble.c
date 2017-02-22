@@ -1172,10 +1172,6 @@ int parsePreamble(rpmSpec spec, int initialPackage)
      */
     if (initialPackage) {
 	char *buildRoot = rpmGetPath(spec->buildRoot, NULL);
-	if (*buildRoot == '\0') {
-	    rpmlog(RPMLOG_ERR, _("%%{buildroot} couldn't be empty\n"));
-	    goto exit;
-	}
 	if (rstreq(buildRoot, "/")) {
 	    rpmlog(RPMLOG_ERR, _("%%{buildroot} can not be \"/\"\n"));
 	    goto exit;
