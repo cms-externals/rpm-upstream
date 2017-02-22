@@ -31,7 +31,7 @@ typedef struct OpenFileInfo {
     char * fileName;
     FILE *fp;
     int lineNum;
-    char readBuf[BUFSIZ];
+    char readBuf[20 * BUFSIZ];
     const char * readPtr;
     struct OpenFileInfo * next;
 } OFI_t;
@@ -228,7 +228,7 @@ static int copyNextLineFromOFI(rpmSpec spec, OFI_t *ofi, int strip)
 	    spec->lbufOff++; from++;
 
 	    if (spec->lbufOff >= spec->lbufSize) {
-		spec->lbufSize += BUFSIZ;
+		spec->lbufSize += 20 * BUFSIZ;
 		spec->lbuf = realloc(spec->lbuf, spec->lbufSize);
 	    }
 	}
@@ -318,7 +318,7 @@ retry:
 
     /* Make sure we have something in the read buffer */
     if (!(ofi->readPtr && *(ofi->readPtr))) {
-	if (!fgets(ofi->readBuf, BUFSIZ, ofi->fp)) {
+	if (!fgets(ofi->readBuf, 20 * BUFSIZ, ofi->fp)) {
 	    /* EOF, remove this file from the stack */
 	    ofi = popOFI(spec);
 
