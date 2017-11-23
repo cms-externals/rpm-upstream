@@ -33,7 +33,6 @@ typedef struct OpenFileInfo {
     int lineNum;
     char *readBuf;
     size_t readBufLen;
-    char readBuf[20 * BUFSIZ];
     const char * readPtr;
     struct OpenFileInfo * next;
 } OFI_t;
