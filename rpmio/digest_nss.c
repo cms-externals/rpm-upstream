@@ -6,7 +6,7 @@
 #include <keyhi.h>
 #include <cryptohi.h>
 #include <blapit.h>
-
+#include <signal.h>
 #include <rpm/rpmlog.h>
 #include "rpmio/digest.h"
 #include "debug.h"
