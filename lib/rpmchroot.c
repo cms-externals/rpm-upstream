@@ -121,15 +121,7 @@ int rpmChrootIn(void)
     if (rootState.chrootDone > 0) {
 	rootState.chrootDone++;
     } else if (rootState.chrootDone == 0) {
-	if (!_rpm_nouserns && getuid())
-	    try_become_root();
-
-	if (chdir("/") == 0 && chroot(rootState.rootDir) == 0) {
 	    rootState.chrootDone = 1;
-	} else {
-	    rpmlog(RPMLOG_ERR, _("Unable to change root directory: %m\n"));
-	    rc = -1;
-	}
     }
     return rc;
 }
@@ -149,12 +141,7 @@ int rpmChrootOut(void)
     if (rootState.chrootDone > 1) {
 	rootState.chrootDone--;
     } else if (rootState.chrootDone == 1) {
-	if (chroot(".") == 0 && fchdir(rootState.cwd) == 0) {
 	    rootState.chrootDone = 0;
-	} else {
-	    rpmlog(RPMLOG_ERR, _("Unable to restore root directory: %m\n"));
-	    rc = -1;
-	}
     }
     return rc;
 }
