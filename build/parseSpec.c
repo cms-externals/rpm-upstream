@@ -136,7 +136,7 @@ static OFI_t * pushOFI(rpmSpec spec, const char *fn)
     ofi->fp = NULL;
     ofi->fileName = xstrdup(fn);
     ofi->lineNum = 0;
-    ofi->readBufLen = BUFSIZ;
+    ofi->readBufLen = BUFSIZ*40;
     ofi->readBuf = xmalloc(ofi->readBufLen);
     ofi->readBuf[0] = '\0';
     ofi->readPtr = NULL;
